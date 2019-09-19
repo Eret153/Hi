@@ -1,0 +1,19 @@
+{
+  "name": "hi",
+  "version": "1.0.0",
+  "description": "* * * It is my first project!!!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Eret153/Hi.git"
+  },
+  "author": "Ostap",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Eret153/Hi/issues"
+  },
+  "homepage": "https://github.com/Eret153/Hi#readme"
+}
