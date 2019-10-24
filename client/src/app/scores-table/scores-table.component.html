@@ -1,10 +1,16 @@
-<p>
-  scores-table works!
-  ITS WORK
-  <table>
-    <th>Player</th>;
-    <th colspan="5">Scores</th>
-    <th>Total</th>
-    
-  </table>
-</p>
+<table>
+  <tr>
+    <th>Player</th>
+    <th colspan="5">Scores <button (click)="clearResults()">1</button> </th>
+    <th>Total <button (click)="reCalcTotals()">0</button> </th>
+  </tr>
+  <tr *ngFor="let p of playersData">
+    <td>{{ p.name }}</td>
+    <td>{{ p.scores[0] }}</td>
+    <td>{{ p.scores[1] }}</td>
+    <td>{{ p.scores[2] }}</td>
+    <td>{{ p.scores[3] }}</td>
+    <td>{{ p.scores[4] }}</td>
+    <th>{{ p.total }}</th>
+  </tr>
+</table>
