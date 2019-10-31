@@ -5,12 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SkereTableComponent } from './skere-table/skere-table.component';
 import { ScoresTableComponent } from './scores-table/scores-table.component';
+import { MathGameComponent } from './math-game/math-game.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SkereTableComponent,
-    ScoresTableComponent
+    ScoresTableComponent,
+    MathGameComponent
   ],
   imports: [
     BrowserModule,

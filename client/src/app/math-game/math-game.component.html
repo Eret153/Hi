@@ -1,0 +1,9 @@
+<table>
+  <tr *ngFor="let r of board">
+    <td *ngFor="let c of r">
+      <span *ngIf="c>0">{{ c }}</span>
+    </td>
+  </tr>
+</table>
+
+<p>{{ msg }}</p>
