@@ -1,4 +1,5 @@
 import { Component, OnInit, HostListener } from '@angular/core';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-math-game',
@@ -8,11 +9,12 @@ import { Component, OnInit, HostListener } from '@angular/core';
 export class MathGameComponent implements OnInit {
 
   msg=''
+  SxS = 4;
   board = [
-    [0,2,0,0],
-    [0,0,0,0],
-    [0,0,0,0],
-    [2,0,0,0]
+    [2,2,2,0],
+    [2,0,0,0],
+    [0,0,2,0],
+    [4,2,0,0]
   ];
 
   constructor() { }
@@ -21,11 +23,77 @@ export class MathGameComponent implements OnInit {
   }
   @HostListener('window:keydown.arrowup')
   onUp() {
-    console.log( 'up' );
+    //sum numbers
+    //shift numbers
+    for (let c=0; c<this.SxS; c++) {
+      for (let r=0; r<this.SxS-1; r++) {
+        //step 1 
+        if ( this.board[r][c] ==0){
+          let find_rNo_ne_0 = -1;
+          for(let ri=r+1; ri<this.SxS; ri++) {
+            if (this.board[ri][c]>0) {
+              find_rNo_ne_0 = ri;
+              break;
+            }
+          }
+          if (find_rNo_ne_0>0) {
+            this.board[r][c] = this.board[find_rNo_ne_0][c];
+            this.board[find_rNo_ne_0][c]=0;
+          }
+        }
+        //step 2
+        let find_rNo_eq_0 = -1;
+        for(let rj=r+1; rj<this.SxS; rj++) {
+          if ( this.board[rj][c]==this.board[r][c] ) {
+            find_rNo_eq_0 = rj;
+          }
+          if (this.board[rj][c]>0) {
+            break;
+          }
+        }
+        if (find_rNo_eq_0>0) {
+          this.board[r][c]+=this.board[find_rNo_eq_0][c];
+          this.board[find_rNo_eq_0][c] = 0;
+        }
+      }
+    }
   }
   @HostListener('window:keydown.arrowdown')
   onDown() {
-    console.log( 'down' );
+    //sum numbers
+    //shift numbers
+    for (let c=0; c<this.SxS; c++) {
+      for (let r=this.SxS-1; r>=0; r--) {
+        //step 1 
+        if ( this.board[r][c] ==0){
+          let find_rNo_ne_0 = -1;
+          for(let ri=r-1; ri>=0; ri++) {
+            if (this.board[ri][c]>0) {
+              find_rNo_ne_0 = ri;
+              break;
+            }
+          }
+          if (find_rNo_ne_0>0) {
+            this.board[r][c] = this.board[find_rNo_ne_0][c];
+            this.board[find_rNo_ne_0][c]=0;
+          }
+        }
+        //step 2
+        let find_rNo_eq_0 = -1;
+        for(let rj=r-1; rj>=0; rj--) {
+          if ( this.board[rj][c]==this.board[r][c] ) {
+            find_rNo_eq_0 = rj;
+          }
+          if (this.board[rj][c]>0) {
+            break;
+          }
+        }
+        if (find_rNo_eq_0>0) {
+          this.board[r][c]+=this.board[find_rNo_eq_0][c];
+          this.board[find_rNo_eq_0][c] = 0;
+        }
+      }
+    }
   }
   @HostListener('window:keydown.arrowleft')
   onLeft() {
