@@ -1,5 +1,6 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { reverse } from 'dns';
 
 @Component({
   selector: 'app-math-game',
@@ -19,89 +20,90 @@ export class MathGameComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
-  @HostListener('window:keydown.arrowup')
-  onUp() {
-    //sum numbers
-    //shift numbers
-    for (let c=0; c<this.SxS; c++) {
-      for (let r=0; r<this.SxS-1; r++) {
-        //step 1 
-        if ( this.board[r][c] ==0){
-          let find_rNo_ne_0 = -1;
-          for(let ri=r+1; ri<this.SxS; ri++) {
-            if (this.board[ri][c]>0) {
-              find_rNo_ne_0 = ri;
-              break;
-            }
-          }
-          if (find_rNo_ne_0>0) {
-            this.board[r][c] = this.board[find_rNo_ne_0][c];
-            this.board[find_rNo_ne_0][c]=0;
-          }
-        }
-        //step 2
-        let find_rNo_eq_0 = -1;
-        for(let rj=r+1; rj<this.SxS; rj++) {
-          if ( this.board[rj][c]==this.board[r][c] ) {
-            find_rNo_eq_0 = rj;
-          }
-          if (this.board[rj][c]>0) {
+  mover( a ) {
+    for (let r=0; r < this.SxS-1; r++) {
+      //step 1 
+      if (a[r]==0) {
+        let find_rNo_ne_0 = -1;
+        for(let ri=r+1; ri < this.SxS; ri++) {
+          if (a[ri]>0) {
+            find_rNo_ne_0 = ri;
             break;
           }
         }
-        if (find_rNo_eq_0>0) {
-          this.board[r][c]+=this.board[find_rNo_eq_0][c];
-          this.board[find_rNo_eq_0][c] = 0;
+        if (find_rNo_ne_0>0) {
+          a[r] = a[find_rNo_ne_0];
+          a[find_rNo_ne_0]=0;
         }
       }
+      //step 2
+      let find_rNo_eq_0 = -1;
+      for(let rj=r+1; rj < this.SxS; rj++) {
+        if ( a[rj]==a[r] ) {
+          find_rNo_eq_0 = rj;
+        }
+        if (a[rj]>0) {
+          break;
+        }
+      }
+      if (find_rNo_eq_0>0) {
+        a[r]+=a[find_rNo_eq_0];
+        a[find_rNo_eq_0] = 0;
+      }
+    }
+    return a;
+  }
+
+  getCol( cNo ) {
+    let a = [];
+    for ( let r=0; r < this.SxS; r++ ){
+      a.push(this.board[r][cNo]);
+    }
+    return a;
+  }
+
+  setCol( cNo, a ) {
+    for ( let r=0; r < this.SxS; r++ ){
+      this.board[r][cNo]=a[r];
+    }
+  }
+
+  getRow(rNo) {
+    return this.board[rNo];
+  }
+  setRow(rNo, a) {
+    this.board[rNo]=a;
+  }
+   
+  ngOnInit() {
+    //this.setRow(3, [16,16,16,16]);
+    //this.setRow(3, this.getRow(1));
+  }
+  @HostListener('window:keydown.arrowup')
+  onUp() {
+    for ( let c=0; c < this.SxS; c++ ) {
+      this.setCol(c, this.mover(this.getCol(c)));
     }
   }
   @HostListener('window:keydown.arrowdown')
   onDown() {
-    //sum numbers
-    //shift numbers
-    for (let c=0; c<this.SxS; c++) {
-      for (let r=this.SxS-1; r>=0; r--) {
-        //step 1 
-        if ( this.board[r][c] ==0){
-          let find_rNo_ne_0 = -1;
-          for(let ri=r-1; ri>=0; ri++) {
-            if (this.board[ri][c]>0) {
-              find_rNo_ne_0 = ri;
-              break;
-            }
-          }
-          if (find_rNo_ne_0>0) {
-            this.board[r][c] = this.board[find_rNo_ne_0][c];
-            this.board[find_rNo_ne_0][c]=0;
-          }
-        }
-        //step 2
-        let find_rNo_eq_0 = -1;
-        for(let rj=r-1; rj>=0; rj--) {
-          if ( this.board[rj][c]==this.board[r][c] ) {
-            find_rNo_eq_0 = rj;
-          }
-          if (this.board[rj][c]>0) {
-            break;
-          }
-        }
-        if (find_rNo_eq_0>0) {
-          this.board[r][c]+=this.board[find_rNo_eq_0][c];
-          this.board[find_rNo_eq_0][c] = 0;
-        }
-      }
+    for ( let c=0; c < this.SxS; c++ ) {
+      this.setCol(c, this.mover(this.getCol(c).reverse() ).reverse() );
     }
   }
   @HostListener('window:keydown.arrowleft')
-  onLeft() {
-    console.log( 'left' );
+  onLeft() {                          
+    for ( let r=0; r < this.SxS; r++ ) {
+      this.setRow(r, this.mover(this.getRow(r)));
+    }
   }
-  @HostListener('window:keydown.arrowrignt')
+  @HostListener('window:keydown.arrowright')
   onRight() {
-    console.log( 'right' );
+    for ( let r=0; r < this.SxS; r++ ) {
+      this.setRow(r, 
+        this.mover(this.getRow(r).reverse() ).reverse() );
+    }
   }
 }
 
+               
