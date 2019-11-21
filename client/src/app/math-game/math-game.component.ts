@@ -1,6 +1,5 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { reverse } from 'dns';
+
 
 @Component({
   selector: 'app-math-game',
@@ -12,10 +11,10 @@ export class MathGameComponent implements OnInit {
   msg=''
   SxS = 4;
   board = [
-    [2,2,2,0],
-    [2,0,0,0],
-    [0,0,2,0],
-    [4,2,0,0]
+    [0,0,0,0],
+    [0,0,0,0],
+    [0,0,0,0],
+    [0,0,0,0]
   ];
 
   constructor() { }
@@ -74,28 +73,55 @@ export class MathGameComponent implements OnInit {
   setRow(rNo, a) {
     this.board[rNo]=a;
   }
+
+  rnd() {
+    return (Math.random() < 0.1 ? 4 : 2 );
+  }
+
+  getZeros() {
+    let Z = [];
+    for ( let r=0; r < this.SxS; r++ ) {
+      for ( let c=0; c < this.SxS; c++ ) {
+        if ( this.board[r][c] == 0 ) {
+          Z.push( [r,c] );
+        }
+      }
+    }
+    return Z;
+  }
+
+  nextNumber() {
+    let Z = this.getZeros();
+    if ( Z.length > 0 ) {
+      let i = Math.floor( Z.length * Math.random() );
+      this.board[ Z[i][0] ][ Z[i][1] ] = this.rnd();
+    }  
+  }
    
   ngOnInit() {
-    //this.setRow(3, [16,16,16,16]);
-    //this.setRow(3, this.getRow(1));
+    this.nextNumber();
+    this.nextNumber();
   }
   @HostListener('window:keydown.arrowup')
   onUp() {
     for ( let c=0; c < this.SxS; c++ ) {
       this.setCol(c, this.mover(this.getCol(c)));
     }
+    this.nextNumber();
   }
   @HostListener('window:keydown.arrowdown')
   onDown() {
     for ( let c=0; c < this.SxS; c++ ) {
       this.setCol(c, this.mover(this.getCol(c).reverse() ).reverse() );
     }
+    this.nextNumber();
   }
   @HostListener('window:keydown.arrowleft')
   onLeft() {                          
     for ( let r=0; r < this.SxS; r++ ) {
       this.setRow(r, this.mover(this.getRow(r)));
     }
+    this.nextNumber();
   }
   @HostListener('window:keydown.arrowright')
   onRight() {
@@ -103,6 +129,7 @@ export class MathGameComponent implements OnInit {
       this.setRow(r, 
         this.mover(this.getRow(r).reverse() ).reverse() );
     }
+    this.nextNumber();
   }
 }
 
