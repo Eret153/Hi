@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { SkereTableComponent } from './skere-table/skere-table.component';
 import { ScoresTableComponent } from './scores-table/scores-table.component';
 import { MathGameComponent } from './math-game/math-game.component';
+import { SeaBettleComponent } from './sea-bettle/sea-bettle.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SkereTableComponent,
     ScoresTableComponent,
-    MathGameComponent
+    MathGameComponent,
+    SeaBettleComponent
   ],
   imports: [
     BrowserModule,
