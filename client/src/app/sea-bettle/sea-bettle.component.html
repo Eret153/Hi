@@ -1,15 +1,17 @@
-<table border="1">
+<h1>Sea Battle</h1>
+<table>
   <tr *ngFor="let r of boards.player">
     <td *ngFor="let c of r">
       {{c}}
     </td>
   </tr>
 </table>
-
-<table border="1">
-  <tr *ngFor="let r of boards.enemy">
-    <td *ngFor="let c of r">
-      {{c}}
+<hr>
+<table [ngClass]="enemy">
+  <tr *ngFor="let r of boards.enemy; index as i">
+    <td *ngFor="let c of r; index as j" [ngClass]=" { 'w': c >= 0, 'r': c < 0 && c != -100, 'b': c == -100 }" 
+      (click) = "myShot ( i,j )">
+      &nbsp;
     </td>
   </tr>
 </table>
