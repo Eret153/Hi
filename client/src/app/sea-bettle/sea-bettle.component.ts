@@ -10,13 +10,13 @@ export class SeaBettleComponent implements OnInit {
   S=10;
   boards = {
     player: [
+      [0,0,10,0,10,0,0,0,0,0],
       [0,0,0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0,0,0],
+      [0,40,0,0,0,0,0,0,0,0],
+      [0,40,0,0,0,0,0,0,0,0],
+      [0,40,0,-100,0,0,0,0,0,0],
+      [0,40,0,0,-20,0,0,0,0,0],
+      [0,0,0,0,20,0,0,0,0,0],
       [0,0,0,0,0,0,0,0,0,0],
       [0,0,0,0,0,0,0,0,0,0]
     ],
@@ -42,6 +42,14 @@ export class SeaBettleComponent implements OnInit {
     if (this.boards.enemy[r][c]>0) {
       this.boards.enemy[r][c]=-this.boards.enemy[r][c];
       }                                                                                                                                                                                                                                                                   
+  }
+
+  enShot() {
+    let r=1;
+    let c=1;
+    if (this.boards.enemy[r][c]>0) {
+      this.boards.enemy[r][c]=-100;
+    }
   }
 
   ngOnInit() {
