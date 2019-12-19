@@ -2,7 +2,7 @@
 <table>
   <tr *ngFor="let r of boards.player">
     <td *ngFor="let c of r"
-      [ngClass]="{'g': c>0, 'lb': c==0, 'b': c==-100}">
+      [ngClass]="{ 'g': ( c>0 ), 'lb': ( c==0 ), 'r': (c<0&&c!=-100), 'b': c==-100 }">
     </td>
   </tr>
 </table>
@@ -13,7 +13,7 @@
 <table [ngClass]="enemy">
   <tr *ngFor="let r of boards.enemy; index as i">
     <td *ngFor="let c of r; index as j" [ngClass]=" { 'w': c >= 0, 'r': c < 0 && c != -100, 'b': c == -100 }" 
-      (click) = "myShot ( i,j )">
+      (click) = "myShot( i, j )">
       &nbsp;
     </td>
   </tr>
