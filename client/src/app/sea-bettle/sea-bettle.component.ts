@@ -99,11 +99,10 @@ export class SeaBettleComponent implements OnInit {
       if ( r > 0 && c < Sm ) { enB[r-1][c+1] = -100; }
       if ( c < Sm ) { enB[r][c+1] = -100; }
       if ( r < Sm && c < Sm ) { enB[r+1][c+1] = -100; }
-      if ( r < Sm ) { enB[r+1][c] = -100; }
+      if ( r < Sm ) { enB[r][c] = -100; }
       if ( r < Sm && c > 0 ) { enB[r+1][c-1] = -100; }
       if ( c > 0 ) { enB[r][c-1] = -100; }
     }
-
   }
 
   ngOnInit() {
