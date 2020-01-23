@@ -23,16 +23,16 @@ export class SeaBettleComponent implements OnInit {
       [0,0,0,0,0,0,0,0,10,0]
     ],
     enemy: [
-      [0,0,0,0,40,0,0,0,0,0],
-      [0,20,0,0,40,0,20,0,0,0],
-      [0,20,0,0,40,0,20,0,0,0],
-      [0,0,0,0,40,0,0,0,0,0],
       [0,0,0,0,0,0,0,0,0,0],
       [0,0,0,0,0,0,0,0,0,0],
-      [0,0,10,0,0,0,0,20,0,0],
-      [0,0,0,0,0,0,0,20,0,0],
-      [0,0,10,0,0,0,0,0,0,0],
-      [0,0,0,0,30,30,30,0,0,0]
+      [0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0]
     ]
   };
 
@@ -60,6 +60,42 @@ export class SeaBettleComponent implements OnInit {
     return Z;
   }
 
+  getZerosH( arr, l) {
+    let Z = [];
+    for ( let r=0; r < this.S; r++ ) {
+      for ( let c = 0; c < this.S; c++ ) {
+        let f = 0; 
+        for ( let cc = c; cc < c+l; cc++ ) {
+        if ( arr[r][c]>=0 ) {
+          f++  
+         }
+       }
+       if (f==l) {
+        Z.push( [r,c] );
+       }  
+     }
+   }
+    
+    return Z;
+  }
+  getZerosV(arr , l) {
+    let Z = [];
+    for ( let r=0; r < this.S; r++ ) {
+      for ( let c = 0; c < this.S; c++ ) {
+        let f = 0; 
+        for ( let cc = c; cc < c+l; cc++ ) {
+        if ( arr[r][c]>=0 ) {
+          f++  
+         }
+       }
+       if (f==l) {
+        Z.push( [r,c] );
+       }  
+     }
+   }
+    return Z;
+  }
+
   enShot() {
     let r=0;
     let c=0;
@@ -78,7 +114,7 @@ export class SeaBettleComponent implements OnInit {
     }    
   }
 
-  getEnemy() {
+  genEnemy() {
     let enB = [];
     for (let r=0; r < this.S; r++) {
       let enR = [];      
@@ -103,6 +139,23 @@ export class SeaBettleComponent implements OnInit {
       if ( r < Sm && c > 0 ) { enB[r+1][c-1] = -100; }
       if ( c > 0 ) { enB[r][c-1] = -100; }
     }
+    //for ( let r=0; r < this.S; r++ ) {
+    //  for ( let c=0; c < this.S; c++ ) {
+    //    if ( enB[r][c] == -100 ) {
+    //      enB[r][c] = 0;  
+    //    }
+    //    if ( enB[r][c] < 0 ) {
+    //      enB[r][c] = -enB[r][c];  
+    //    }
+    //  }
+    //}
+  this.boards.enemy = enB;
+  }
+
+  genEnemyAll() {
+    let enB = [];
+    //
+    this.boards.enemy = enB;
   }
 
   ngOnInit() {
