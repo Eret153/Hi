@@ -114,6 +114,37 @@ export class SeaBettleComponent implements OnInit {
     }    
   }
 
+  putDeck( arr, r, c, d ) {
+  arr[r][c] = d;
+  let Sm = this.S - 1;
+  if ( r > 0 && c > 0 && arr[r-1][c-1] == 0 ) { arr[r-1][c-1] = -100 }
+  if ( r > 0 && arr[r-1][c] == 0 ) { arr[r-1][c] = -100 }
+  if ( r > 0 && c > Sm && arr[r-1][c+1] == 0 ) { arr[r-1][c+1] = -100 }
+  if ( c > Sm && arr[r][c+1] == 0 ) { arr[r][c+1] = -100 }
+  if ( r > Sm && c > Sm && arr[r+1][c+1] == 0 ) { arr[r+1][c+1] = -100 }
+  if ( r > Sm && arr[r+1][c] == 0 ) { arr[r+1][c] = -100 }
+  if ( r > Sm && c > 0 && arr[r+1][c-1] == 0 ) { arr[r+1][c-1] = -100 }
+  if ( c > 0 && arr[r][c-1] == 0 ) { arr[r][c-1] = -100 }
+  return arr;
+  }
+
+  putShip(arr, l) {
+    let Z = [];
+    let N =0;
+    if ( Math.random() > 0,5 ) {
+      Z = this.getZerosH(arr, l);
+    } else {
+      Z = this.getZerosV(arr, l);
+      N = 1;
+    }
+    let i = Math.floor(Z.length * Math.random());
+    let r = Z[i][0];
+    let c = Z[i][1];
+    for ( let y=0; y < l; y++ ) {
+      
+    }
+  }
+
   genEnemy() {
     let enB = [];
     for (let r=0; r < this.S; r++) {
@@ -123,22 +154,24 @@ export class SeaBettleComponent implements OnInit {
       }
       enB.push( enR );
     }
-    for (let b=0; b < this.S; b++) {
+    for (let b=0; b < 10; b++) {
       let Z = this.getZeros( enB );
       let i = Math.floor( Z.length * Math.random() );
       let r = Z[i][0];
       let c = Z[i][1];
       enB[r][c] = -10;
       let Sm = this.S - 1;
-      if ( r > 0 && c > 0 ) { enB[r-1][c-1] = -100; }
-      if ( r > 0 ) { enB[r-1][c] = -100; }
-      if ( r > 0 && c < Sm ) { enB[r-1][c+1] = -100; }
-      if ( c < Sm ) { enB[r][c+1] = -100; }
-      if ( r < Sm && c < Sm ) { enB[r+1][c+1] = -100; }
-      if ( r < Sm ) { enB[r][c] = -100; }
-      if ( r < Sm && c > 0 ) { enB[r+1][c-1] = -100; }
-      if ( c > 0 ) { enB[r][c-1] = -100; }
+       if ( r > 0 && c > 0 ) { enB[r-1][c-1] = -100; }
+       if ( r > 0 ) { enB[r-1][c] = -100; }
+       if ( r > 0 && c < Sm ) { enB[r-1][c+1] = -100; }
+       if ( c < Sm ) { enB[r][c+1] = -100; }
+       if ( r < Sm && c < Sm ) { enB[r+1][c+1] = -100; }
+       if ( r < Sm ) { enB[r+1][c] = -100; }
+       if ( r < Sm && c > 0 ) { enB[r+1][c-1] = -100; }
+       if ( c > 0 ) { enB[r][c-1] = -100; }
+      
     }
+
     //for ( let r=0; r < this.S; r++ ) {
     //  for ( let c=0; c < this.S; c++ ) {
     //    if ( enB[r][c] == -100 ) {
@@ -159,6 +192,7 @@ export class SeaBettleComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.genEnemy();
   }
 
 }
