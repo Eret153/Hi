@@ -63,16 +63,16 @@ export class SeaBettleComponent implements OnInit {
   getZerosH( arr, l) {
     let Z = [];
     for ( let r=0; r < this.S; r++ ) {
-      for ( let c = 0; c < this.S; c++ ) {
+      for ( let c = 0; c < this.S - l + 1; c++ ) {
         let f = 0; 
         for ( let cc = c; cc < c+l; cc++ ) {
-        if ( arr[r][c]>=0 ) {
-          f++  
-         }
-       }
-       if (f==l) {
-        Z.push( [r,c] );
-       }  
+          if ( arr[r][cc]>=0 ) {
+            f++;
+          }
+        }
+        if (f==l) {
+          Z.push( [r,c] );
+        }  
      }
    }
     
@@ -80,17 +80,17 @@ export class SeaBettleComponent implements OnInit {
   }
   getZerosV(arr , l) {
     let Z = [];
-    for ( let r=0; r < this.S; r++ ) {
+    for ( let r=0; r < this.S - l + 1; r++ ) {
       for ( let c = 0; c < this.S; c++ ) {
         let f = 0; 
-        for ( let cc = c; cc < c+l; cc++ ) {
-        if ( arr[r][c]>=0 ) {
-          f++  
-         }
-       }
-       if (f==l) {
-        Z.push( [r,c] );
-       }  
+        for ( let rr = r; rr < r+l; rr++ ) {
+          if ( arr[rr][c]>=0 ) {
+            f++;
+          }
+        }
+        if (f==l) {
+          Z.push( [r,c] );
+        }  
      }
    }
     return Z;
@@ -114,35 +114,37 @@ export class SeaBettleComponent implements OnInit {
     }    
   }
 
-  putDeck( arr, r, c, d ) {
-  arr[r][c] = d;
-  let Sm = this.S - 1;
-  if ( r > 0 && c > 0 && arr[r-1][c-1] == 0 ) { arr[r-1][c-1] = -100 }
-  if ( r > 0 && arr[r-1][c] == 0 ) { arr[r-1][c] = -100 }
-  if ( r > 0 && c > Sm && arr[r-1][c+1] == 0 ) { arr[r-1][c+1] = -100 }
-  if ( c > Sm && arr[r][c+1] == 0 ) { arr[r][c+1] = -100 }
-  if ( r > Sm && c > Sm && arr[r+1][c+1] == 0 ) { arr[r+1][c+1] = -100 }
-  if ( r > Sm && arr[r+1][c] == 0 ) { arr[r+1][c] = -100 }
-  if ( r > Sm && c > 0 && arr[r+1][c-1] == 0 ) { arr[r+1][c-1] = -100 }
-  if ( c > 0 && arr[r][c-1] == 0 ) { arr[r][c-1] = -100 }
-  return arr;
+  putDeck( arr, r, c, d = -10 ) {
+    arr[r][c] = d;
+    let Sm = this.S - 1;
+    if ( r > 0 && c > 0 && arr[r-1][c-1] == 0 ) { arr[r-1][c-1] = -100; }
+    if ( r > 0 && arr[r-1][c] == 0 ) { arr[r-1][c] = -100; }
+    if ( r > 0 && c < Sm && arr[r-1][c+1] == 0 ) { arr[r-1][c+1] = -100; }
+    if ( c < Sm && arr[r][c+1] == 0 ) { arr[r][c+1] = -100; }
+    if ( r < Sm && c < Sm && arr[r+1][c+1] == 0 ) { arr[r+1][c+1] = -100; }
+    if ( r < Sm && arr[r+1][c] == 0 ) { arr[r+1][c] = -100; }
+    if ( r < Sm && c > 0 && arr[r+1][c-1] == 0 ) { arr[r+1][c-1] = -100; }
+    if ( c > 0 && arr[r][c-1] == 0 ) { arr[r][c-1] = -100; }
+    return arr;
   }
 
   putShip(arr, l) {
     let Z = [];
     let N =0;
-    if ( Math.random() > 0,5 ) {
+    if ( Math.random() > 0.5 ) {
       Z = this.getZerosH(arr, l);
     } else {
       Z = this.getZerosV(arr, l);
       N = 1;
     }
-    let i = Math.floor(Z.length * Math.random());
+    let i = Math.floor((Z.length-1) * Math.random());
     let r = Z[i][0];
     let c = Z[i][1];
     for ( let y=0; y < l; y++ ) {
-      
+      console.log(r, y, N)
+      arr = this.putDeck( arr, (r+y*N), c+y*(1-N) );
     }
+    return arr;
   }
 
   genEnemy() {
@@ -154,34 +156,26 @@ export class SeaBettleComponent implements OnInit {
       }
       enB.push( enR );
     }
-    for (let b=0; b < 10; b++) {
-      let Z = this.getZeros( enB );
-      let i = Math.floor( Z.length * Math.random() );
-      let r = Z[i][0];
-      let c = Z[i][1];
-      enB[r][c] = -10;
-      let Sm = this.S - 1;
-       if ( r > 0 && c > 0 ) { enB[r-1][c-1] = -100; }
-       if ( r > 0 ) { enB[r-1][c] = -100; }
-       if ( r > 0 && c < Sm ) { enB[r-1][c+1] = -100; }
-       if ( c < Sm ) { enB[r][c+1] = -100; }
-       if ( r < Sm && c < Sm ) { enB[r+1][c+1] = -100; }
-       if ( r < Sm ) { enB[r+1][c] = -100; }
-       if ( r < Sm && c > 0 ) { enB[r+1][c-1] = -100; }
-       if ( c > 0 ) { enB[r][c-1] = -100; }
-      
-    }
-
-    //for ( let r=0; r < this.S; r++ ) {
-    //  for ( let c=0; c < this.S; c++ ) {
-    //    if ( enB[r][c] == -100 ) {
-    //      enB[r][c] = 0;  
-    //    }
-    //    if ( enB[r][c] < 0 ) {
-    //      enB[r][c] = -enB[r][c];  
-    //    }
-    //  }
-    //}
+    enB = this.putShip( enB, 4  );     
+    enB = this.putShip( enB, 3 );
+    enB = this.putShip( enB, 3 );
+    enB = this.putShip( enB, 2 );
+    enB = this.putShip( enB, 2 );
+    enB = this.putShip( enB, 2 );
+    enB = this.putShip( enB, 1 );
+    enB = this.putShip( enB, 1 );
+    enB = this.putShip( enB, 1 );
+    enB = this.putShip( enB, 1 );
+    // for ( let r=0; r < this.S; r++ ) {
+    //   for ( let c=0; c < this.S; c++ ) {
+    //     if ( enB[r][c] == -100 ) {
+    //       enB[r][c] = 0;  
+    //     }
+    //     if ( enB[r][c] < 0 ) {
+    //       enB[r][c] = -enB[r][c];  
+    //     }
+    //   }
+    // }
   this.boards.enemy = enB;
   }
 
