@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { SaeBattleField } from '../sae-battle-field';
 
 @Component({
   selector: 'app-sea-bettle',
@@ -13,14 +13,14 @@ export class SeaBettleComponent implements OnInit {
     player: [
       [0,0,10,0,10,0,0,0,0,0],
       [0,0,0,0,0,0,0,0,0,0],
-      [0,40,0,0,0,0,0,0,10,0],
+      [0,40,0,0,0,20,20,0,10,0],
       [0,40,0,0,0,0,0,0,0,0],
       [0,40,0,0,0,0,0,0,0,0],
-      [0,40,0,0,20,0,0,0,0,0],
-      [0,0,0,0,20,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0,10,0]
+      [0,40,0,0,20,0,20,0,0,0],
+      [0,0,0,0,20,0,20,0,0,30],
+      [0,0,0,0,0,0,0,0,0,30],
+      [0,0,30,30,30,0,0,0,0,30],
+      [0,0,0,0,0,0,0,10,0,0]
     ],
     enemy: [
       [0,0,0,0,0,0,0,0,0,0],
@@ -166,16 +166,16 @@ export class SeaBettleComponent implements OnInit {
     enB = this.putShip( enB, 1 );
     enB = this.putShip( enB, 1 );
     enB = this.putShip( enB, 1 );
-    // for ( let r=0; r < this.S; r++ ) {
-    //   for ( let c=0; c < this.S; c++ ) {
-    //     if ( enB[r][c] == -100 ) {
-    //       enB[r][c] = 0;  
-    //     }
-    //     if ( enB[r][c] < 0 ) {
-    //       enB[r][c] = -enB[r][c];  
-    //     }
-    //   }
-    // }
+    for ( let r=0; r < this.S; r++ ) {
+      for ( let c=0; c < this.S; c++ ) {
+        if ( enB[r][c] == -100 ) {
+          enB[r][c] = 0;  
+        }
+        if ( enB[r][c] < 0 ) {
+          enB[r][c] = -enB[r][c];  
+        }
+      }
+    }
   this.boards.enemy = enB;
   }
 
