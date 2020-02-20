@@ -36,7 +36,11 @@ export class SeaBettleComponent implements OnInit {
     ]
   };
 
-  constructor() { }
+  tmp: SaeBattleField;
+
+  constructor() {
+    this.tmp = new SaeBattleField(100);
+   }
 
   myShot( r, c ) {
     if (this.boards.enemy[r][c]==0) {
