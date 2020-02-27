@@ -4,7 +4,7 @@ export class SaeBattleField {
     fieldType: number;
     constructor(s: number = 10){
       this.fieldSize = s;
-      this.fieldType = 0;
+      this.setType();
       this.field = [];
       for (let r=0; r< this.fieldSize; r++ ) {
           let enR = [];
@@ -16,15 +16,27 @@ export class SaeBattleField {
       this.rndShips();
       console.log(this.field);
     } 
+
+    setType( t: number = 0 ){
+        this.fieldType = t;
+    }
+
     getCellClass( r:number, c:number ): string {
-        let cls: string = 'lb';
+        const classes: string[][] = [
+            [ 'lb', 'w' ],
+            [ 'g', 'w' ],
+            [ 'r', 'r' ],
+            [ 'b', 'b']
+        ];
+        let ft = this.fieldType;
+        let cls: string = classes[0][ft];
         if (this.field[r][c] > 0 ){
-            cls = 'g';
+            cls = classes[1][ft];
         }
         if (this.field[r][c] < 0 ){
-            cls = 'r';
+            cls = classes[2][ft];;
             if (this.field[r][c] == -100 ){
-                cls = 'b';
+                cls = classes[3][ft];
             }
         }    
         //'g': ( c>0 ), 'lb': ( c==0 ), 'r': (c<0&&c!=-100), 'b': c==-100
