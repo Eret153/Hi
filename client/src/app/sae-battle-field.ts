@@ -1,3 +1,5 @@
+import { classes } from './sea-battle-classes';
+
 export class SaeBattleField {
     fieldSize: number ;
     field: number[][];
